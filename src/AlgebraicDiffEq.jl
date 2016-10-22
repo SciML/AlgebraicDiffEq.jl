@@ -1,7 +1,7 @@
 module AlgebraicDiffEq
 
   using DiffEqBase, Sundials
-
+  import DiffEqBase: solve
   using Parameters
 
   include("problems.jl")
