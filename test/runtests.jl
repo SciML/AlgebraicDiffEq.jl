@@ -1,5 +1,6 @@
 using AlgebraicDiffEq
 using Base.Test
 
-# write your own tests here
-@test 1 == 2
+#DAE
+println("Resrob DAE Tests")
+@time @test include("dae_resrob_tests.jl")
