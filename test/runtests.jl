@@ -1,4 +1,4 @@
-using AlgebraicDiffEq
+using AlgebraicDiffEq, DiffEqDevTools, DiffEqProblemLibrary
 using Base.Test
 
 #DAE
