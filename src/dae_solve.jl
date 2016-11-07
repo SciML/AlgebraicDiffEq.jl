@@ -5,7 +5,7 @@ Solves the DAE as defined by prob on the time interval tspan. If not given, tspa
 
 ### Keyword Arguments
 
-* `Δt`: Sets the initial stepsize. Defaults to an automatic choice.
+* `dt`: Sets the initial stepsize. Defaults to an automatic choice.
 * `save_timeseries`: Saves the result at every timeseries_steps steps. Default is true.
 * `timeseries_steps`: Denotes how many steps between saving a value for the timeseries. Defaults to 1.
 * `adaptive` - Turns on adaptive timestepping for appropriate methods. Default is false.
@@ -14,8 +14,8 @@ Solves the DAE as defined by prob on the time interval tspan. If not given, tspa
 * `ablstol` - Absolute tolerance in adaptive timestepping. Defaults to 1e-3.
 * `reltol` - Relative tolerance in adaptive timestepping. Defaults to 1e-6.
 * `maxiters` - Maximum number of iterations before stopping. Defaults to 1e9.
-* `Δtmax` - Maximum Δt for adaptive timestepping. Defaults to half the timespan.
-* `Δtmin` - Minimum Δt for adaptive timestepping. Defaults to 1e-10.
+* `dtmax` - Maximum dt for adaptive timestepping. Defaults to half the timespan.
+* `dtmin` - Minimum dt for adaptive timestepping. Defaults to 1e-10.
 * `internalnorm` - The norm for which error estimates are calculated. Default is 2.
 * `progressbar` - Turns on/off the Juno progressbar. Defualt is false.
 * `progress_steps` - Numbers of steps between updates of the progress bar. Default is 1000.
@@ -23,11 +23,11 @@ Solves the DAE as defined by prob on the time interval tspan. If not given, tspa
   - `idasol`: The DAE solver from Sundials
 
 """
-function solve(prob::AbstractDAEProblem,tspan::AbstractArray=[0,1];Δt::Number=0.0,save_timeseries::Bool = true,
+function solve(prob::AbstractDAEProblem,tspan::AbstractArray=[0,1];dt::Number=0.0,save_timeseries::Bool = true,
               timeseries_steps::Int = 1,alg=nothing,adaptive=false,γ=2.0,alg_hint=nothing,
               abstol=1e-3,reltol=1e-6,qmax=1.125,maxiters::Int = round(Int,1e5),
-              Δtmax=nothing,Δtmin=nothing,progress_steps=1000,internalnorm=2, saveat=[],
-              progressbar=false,tType=typeof(Δt))
+              dtmax=nothing,dtmin=nothing,progress_steps=1000,internalnorm=2, saveat=[],
+              progressbar=false,tType=typeof(dt))
 
   if tspan[end]-tspan[1]<0
     tspan = vec(tspan)
@@ -36,13 +36,13 @@ function solve(prob::AbstractDAEProblem,tspan::AbstractArray=[0,1];Δt::Number=0
   atomloaded = isdefined(Main,:Atom)
   t = tspan[1]
   Ts = tspan[2:end]
-  @unpack u₀,du₀,knownanalytic,analytic,numvars,isinplace = prob
-  uType = typeof(u₀)
-  uEltype = eltype(u₀)
-  rateType = typeof(du₀)
+  @unpack u0,du0,knownanalytic,analytic,numvars,isinplace = prob
+  uType = typeof(u0)
+  uEltype = eltype(u0)
+  rateType = typeof(du0)
 
-  u = copy(u₀)
-  du= copy(du₀)
+  u = copy(u0)
+  du= copy(du0)
   ks = Vector{uType}(0)
 
   if alg == nothing
@@ -69,7 +69,7 @@ function solve(prob::AbstractDAEProblem,tspan::AbstractArray=[0,1];Δt::Number=0
 
     vectimeseries,vectimeseries_du = Sundials.idasol(f!,u,du,ts)
     timeseries = Vector{uType}(0)
-    if typeof(u₀)<:AbstractArray
+    if typeof(u0)<:AbstractArray
       for i=1:size(vectimeseries,1)
         push!(timeseries,reshape(view(vectimeseries,i,:),sizeu))
       end
@@ -83,10 +83,10 @@ function solve(prob::AbstractDAEProblem,tspan::AbstractArray=[0,1];Δt::Number=0
   end
 
   if knownanalytic
-    u_analytic,du_analytic = analytic(t,u₀,du₀)
+    u_analytic,du_analytic = analytic(t,u0,du0)
     timeseries_analytic = Vector{uType}(0)
     for i in 1:size(timeseries,1)
-      u_tmp,du_tmp = analytic(ts[i],u₀,du₀)
+      u_tmp,du_tmp = analytic(ts[i],u0,du0)
       push!(timeseries_analytic,u_tmp)
       push!(timeseries_du_analytic,du_tmp)
     end
