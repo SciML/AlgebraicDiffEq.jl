@@ -1,28 +1,3 @@
-"""
-`solve(prob::DAEProblem,tspan)`
-
-Solves the DAE as defined by prob on the time interval tspan. If not given, tspan defaults to [0,1].
-
-### Keyword Arguments
-
-* `dt`: Sets the initial stepsize. Defaults to an automatic choice.
-* `save_timeseries`: Saves the result at every timeseries_steps steps. Default is true.
-* `timeseries_steps`: Denotes how many steps between saving a value for the timeseries. Defaults to 1.
-* `adaptive` - Turns on adaptive timestepping for appropriate methods. Default is false.
-* `γ` - The risk-factor γ in the q equation for adaptive timestepping. Default is 2.
-* `qmax` - Defines the maximum value possible for the adaptive q. Default is 1.125.
-* `ablstol` - Absolute tolerance in adaptive timestepping. Defaults to 1e-3.
-* `reltol` - Relative tolerance in adaptive timestepping. Defaults to 1e-6.
-* `maxiters` - Maximum number of iterations before stopping. Defaults to 1e9.
-* `dtmax` - Maximum dt for adaptive timestepping. Defaults to half the timespan.
-* `dtmin` - Minimum dt for adaptive timestepping. Defaults to 1e-10.
-* `internalnorm` - The norm for which error estimates are calculated. Default is 2.
-* `progressbar` - Turns on/off the Juno progressbar. Defualt is false.
-* `progress_steps` - Numbers of steps between updates of the progress bar. Default is 1000.
-* `alg`: String which defines the solver algorithm. Defult is "idasol". Possibilities are:
-  - `idasol`: The DAE solver from Sundials
-
-"""
 function solve(prob::AbstractDAEProblem,tspan::AbstractArray=[0,1];dt::Number=0.0,save_timeseries::Bool = true,
               timeseries_steps::Int = 1,alg=nothing,adaptive=false,γ=2.0,alg_hint=nothing,
               abstol=1e-3,reltol=1e-6,qmax=1.125,maxiters::Int = round(Int,1e5),
