@@ -5,6 +5,8 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/f7vaqo5daupdm9cj?svg=true)](https://ci.appveyor.com/project/ChrisRackauckas/algebraicdiffeq-jl)
 [![Coverage Status](https://coveralls.io/repos/github/JuliaDiffEq/AlgebraicDiffEq.jl/badge.svg)](https://coveralls.io/github/JuliaDiffEq/AlgebraicDiffEq.jl)
 [![codecov.io](http://codecov.io/github/ChrisRackauckas/AlgebraicDiffEq.jl/coverage.svg?branch=master)](http://codecov.io/github/ChrisRackauckas/AlgebraicDiffEq.jl?branch=master)
+[![AlgebraicDiffEq](http://pkg.julialang.org/badges/AlgebraicDiffEq_0.5.svg)](http://pkg.julialang.org/?pkg=AlgebraicDiffEq)
+[![AlgebraicDiffEq](http://pkg.julialang.org/badges/AlgebraicDiffEq_0.6.svg)](http://pkg.julialang.org/?pkg=AlgebraicDiffEq)
 
 AlgebraicDiffEq.jl is a component package in the DifferentialEquations ecosystem. It holds the
 differential algebraic equation solvers and utilities. While completely independent
