@@ -12,3 +12,5 @@ AlgebraicDiffEq.jl is a component package in the DifferentialEquations ecosystem
 differential algebraic equation solvers and utilities. While completely independent
 and usable on its own, users interested in using this
 functionality should check out [DifferentialEquations.jl](https://github.com/JuliaDiffEq/DifferentialEquations.jl).
+
+** Note: ** This library is, at least for now, deprecated and all of its functionality was moved to the component packages.
